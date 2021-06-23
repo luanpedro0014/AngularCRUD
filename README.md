@@ -1,27 +1,146 @@
-# CrudAngular
+<html>
+  <h3>Construção da APi através do db.json.</h3>
+   <br> Criar no power shell.</br>
+   <br>npm install -g json-server</br>
+   <br>json-server --watch db.json</br>
+  <h4>Criar o file db.json.</h4>
+  
+<br>{
+  "PeriodicElement": [
+  <br>
+    {
+      "id": 1,
+      "position": 1,
+      "name": "Hydrogen",
+      "weight": 1.0079,
+      "symbol": "H"
+    },
+  </br>
+  <br>
+    {
+      "id": 2,
+      "position": 2,
+      "name": "Helium",
+      "weight": 4.0026,
+      "symbol": "He"
+    },
+    </br>
+    <br>
+    {
+      "id": 3,
+      "position": 3,
+      "name": "Lithium",
+      "weight": 6.941,
+      "symbol": "Li"
+    },
+    </br>
+    <br>
+    {
+      "id": 4,
+      "position": 4,
+      "name": "Beryllium",
+      "weight": 9.0122,
+      "symbol": "Be"
+    },
+    </br>
+    <br>
+    {
+      "id": 5,
+      "position": 5,
+      "name": "Boron",
+      "weight": 10.811,
+      "symbol": "B"
+    },
+    </br>
+    <br>
+    {
+      "id": 6,
+      "position": 6,
+      "name": "Carbon",
+      "weight": 12.0107,
+      "symbol": "C"
+    },
+    </br>
+    <br>
+    {
+      "id": 7,
+      "position": 7,
+      "name": "Nitrogen",
+      "weight": 14.0067,
+      "symbol": "N"
+    },</br>
+    <br>
+    {
+      "id": 8,
+      "position": 8,
+      "name": "Oxygen",
+      "weight": 15.9994,
+      "symbol": "O"
+    },
+    </br>
+    <br>
+    {
+      "id": 9,
+      "position": 9,
+      "name": "Fluorine",
+      "weight": 18.9984,
+      "symbol": "F"
+    },</br>
+    <br>
+    {
+      "id": 10,
+      "position": 10,
+      "name": "Neon",
+      "weight": 20.1797,
+      "symbol": "Ne"
+    }
+    </br>
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.0.4.
+  ]
+}
 
-## Development server
+<h3>Criar uma Folder com o novo model e criar o file PeriodicElement.</h3>
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+export interface PeriodicElement {
+<br>
+ <br> id: number;</br>
+ <br> name: string;</br>
+ <br> position: number;</br>
+ <br> weight: number;</br>
+ <br> symbol: string;</br>
+}
+</br>
 
-## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+<h3>Criar um folder service e o file  periodicEllement.service.ts</h3>
 
-## Build
+<br>import { Injectable } from '@angular/core';</br>
+<br>import { HttpClient } from '@angular/common/http';</br>
+<br>import { Observable } from 'rxjs';</br>
+<br>import { PeriodicElement } from '../models/PeriodicElement';</br>
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+<br>@Injectable()</br>
+<br>export class PeriodicElementService {</br>
 
-## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+ <br> elementApiUrl ='http://localhost:3000/PeriodicElement'; //Link da API</br>
+ <br> constructor(private http: HttpClient) { }<br>
 
-## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+ <br> getElements(): Observable<PeriodicElement[]>{
+   return this.http.get<PeriodicElement[]>(this.elementApiUrl);
 
-## Further help
+  }</br>
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+  <br>createElements(element:PeriodicElement): Observable<PeriodicElement>{
+  return this.http.post<PeriodicElement>(this.elementApiUrl,element);
+}
+</br>
+  <h2>Para testar APi é utilizado o Postman</h2>
+<br> GET http://localhost:3000/PeriodicElement/   <br>
+<br> Delete http://localhost:3000/PeriodicElement/</br>
+  <br>Post http://localhost:3000/PeriodicElement/</br>
+  
+
+
+</html>
